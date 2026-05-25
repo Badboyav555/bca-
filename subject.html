@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Subject | BCANotes</title>
+
+  <meta 
+    name="description" 
+    content="Choose a unit to read BCA notes." 
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body data-page="subject">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">💻</div>
+        BCANotes
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+
+      <div class="search-wrap">
+        <div class="nav-search">
+          <span class="nav-search-icon">🔍</span>
+
+          <input 
+            type="text"
+            id="nav-search-input"
+            placeholder="Search notes…"
+            autocomplete="off"
+          />
+        </div>
+
+        <div id="search-results"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+
+    <div class="breadcrumb" id="breadcrumb"></div>
+
+    <div class="page-title" id="page-title">
+      Subject
+    </div>
+
+    <div class="page-subtitle" id="page-subtitle">
+      Select a unit to read notes
+    </div>
+
+  </div>
+
+  <!-- Units -->
+  <section class="section">
+
+    <div class="section-header">
+      <div class="section-label">Units</div>
+      <div class="section-title">Choose a Unit</div>
+    </div>
+
+    <div id="unit-list"></div>
+
+  </section>
+
+  <!-- Other Subjects -->
+  <section class="section">
+
+    <div class="section-header">
+      <div class="section-label">More</div>
+      <div class="section-title">Other Subjects</div>
+    </div>
+
+    <div class="subject-grid" id="other-subjects"></div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>
+      © 2026 BCANotes · 
+      <a href="index.html">Home</a> · 
+      <a href="admin.html">Admin</a>
+    </p>
+  </footer>
+
+  <div class="toast"></div>
+
+  <script src="js/app.js"></script>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      const sem = parseInt(
+        new URLSearchParams(location.search).get('sem')
+      ) || 1;
+
+      const subject =
+        new URLSearchParams(location.search).get('subject') ||
+        'fundamentals';
+
+      // SUBJECTS SEMESTER WISE
+
+      const semesterSubjects = {
+
+        1: [
+          'Fundamentals Of Computers',
+          'Mathematics For Computing',
+          'Programming With C',
+          'Digital Logic',
+          'C Programming Laboratory',
+          'Office Tools Laboratory',
+          'General English',
+          'Programming Fundamentals'
+        ],
+
+        2: [
+          'Multimedia Tools',
+          'Object Oriented Programming with C++',
+          'Data Structure And Algorithms',
+          'System Analysis and Design',
+          'C++ Laboratory',
+          'DSA Laboratory',
+          'General Hindi',
+          'Hardware and Networking'
+        ],
+
+        3: [
+          'Database Management System',
+          'Computer Networks',
+          'Introduction to JAVA Programming',
+          'Computer Graphics',
+          'DBMS Laboratory',
+          'Java Laboratory'
+        ],
+
+        4: [
+          'Introduction to Internet Technology',
+          'Operating System',
+          'Introduction to Python Programming',
+          'Client Server Computing',
+          'Python Programming Laboratory',
+          'Internet Technology Laboratory'
+        ],
+
+        5: [
+          'Artificial Intelligence and Machine Learning',
+          'Design and Analysis of Algorithms',
+          'Computer System Architecture',
+          'Compiler Design',
+          'Software Engineering',
+          'Linux Operating System',
+          'Mobile Application Development',
+          'R Programming',
+          'Mobile App Development Laboratory',
+          'R Programming Laboratory',
+          'Seminar'
+        ],
+
+        6: [
+          'Data Science',
+          'Computer Oriented Statistical Techniques',
+          'Web Programming Using C#',
+          'VB.NET',
+          'Cyber Security',
+          'Principles of Management',
+          'Cloud Computing',
+          'Introduction to IoT',
+          'Web Programming Laboratory',
+          'VB.NET Laboratory',
+          'Minor Project'
+        ]
+
+      };
+
+      // ICONS
+
+      const emojis = [
+        '💻',
+        '🧠',
+        '🌐',
+        '📡',
+        '🗄️',
+        '⚙️',
+        '📱',
+        '☁️',
+        '🤖',
+        '🔐',
+        '📊'
+      ];
+
+      const backgrounds = [
+        'bg-physics',
+        'bg-chemistry',
+        'bg-botany',
+        'bg-zoology',
+        'bg-maths'
+      ];
+
+      const container =
+        document.getElementById('other-subjects');
+
+      if (!container) return;
+
+      const currentSubjects =
+        semesterSubjects[sem] || [];
+
+      currentSubjects.forEach((sub, index) => {
+
+        const a = document.createElement('a');
+
+        a.href =
+          `subject.html?sem=${sem}&subject=${encodeURIComponent(sub)}`;
+
+        a.className =
+          'subject-card glass-card';
+
+        a.innerHTML = `
+          <div class="subject-icon ${backgrounds[index % backgrounds.length]}">
+            ${emojis[index % emojis.length]}
+          </div>
+
+          <div class="subject-name">
+            ${sub}
+          </div>
+
+          <div class="subject-meta">
+            5 Units • Semester ${sem}
+          </div>
+
+          <div class="subject-arrow">›</div>
+        `;
+
+        container.appendChild(a);
+
+      });
+
+      // PAGE TITLE
+
+      document.title = `Semester ${sem} Subject | BCANotes`;
+
+      document.getElementById('page-title').textContent =
+        decodeURIComponent(subject);
+
+      document.getElementById('breadcrumb').innerHTML =
+        `<a href="index.html">Home</a> / Semester ${sem}`;
+
+    });
+
+  </script>
+
+</body>
+</html>
