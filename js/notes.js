@@ -5,10 +5,10 @@
 // ── Supabase ──────────────────────────────────
 
 const SUPABASE_URL =
-  'https://yiucvqmtumyslcblowop.supabase.co';
+  'https://bxxessffogadjgtlyhdc.supabase.co';
 
 const SUPABASE_KEY =
-  'sb_publishable_Oc2bWjEsfLDWCLU7dVuFAQ_Ofj5nrNq';
+  'sb_publishable_JVdXqEEWRniljUZVzaLWRg_jHakF3rZ';
 
 let _sb = null;
 
