@@ -3,8 +3,8 @@
    ============================================= */
 
 // ── Config ────────────────────────────────────
-const SUPABASE_URL    = 'https://yiucvqmtumyslcblowop.supabase.co';
-const SUPABASE_KEY    = 'sb_publishable_Oc2bWjEsfLDWCLU7dVuFAQ_Ofj5nrNq';
+const SUPABASE_URL    = 'https://bxxessffogadjgtlyhdc.supabase.co';
+const SUPABASE_KEY    = 'sb_publishable_JVdXqEEWRniljUZVzaLWRg_jHakF3rZ';
 const ADMIN_PASSWORD  = 'admin@bca2026';
 
 let _sb      = null;
