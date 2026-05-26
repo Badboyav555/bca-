@@ -740,7 +740,7 @@ ${basePath()}notes/sem${S.sem}/${subjectFolder}/${S.note}-${lang}.md
 
     }
 
-    const md = await res.text();
+ /*   const md = await res.text();
 
     if (!md || !md.trim()) {
 
@@ -748,7 +748,7 @@ ${basePath()}notes/sem${S.sem}/${subjectFolder}/${S.note}-${lang}.md
         'File is empty'
       );
 
-    } 
+    } */
     /* const md = await res.text();
 
 // EMPTY FILE
@@ -775,6 +775,29 @@ if (
   );
 
 } */
+     const md = await res.text();
+
+if (!md || !md.trim()) {
+
+  throw new Error(
+    'File is empty'
+  );
+
+}
+
+// Detect GitHub fallback HTML page
+if (
+
+  md.includes('<title>') &&
+  md.includes('BCANotes')
+
+) {
+
+  throw new Error(
+    'Markdown file not found'
+  );
+
+}
 
     S.md = md;
 
