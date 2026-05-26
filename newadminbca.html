@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin Panel | BCANotes</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+
+  <!-- Inline critical styles -->
+  <style>
+
+    body {
+      background: #f4f6fb;
+    }
+
+    /* LOGIN SCREEN */
+
+    #admin-login {
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* APP HIDDEN */
+
+    #admin-app {
+      display: none;
+    }
+
+  </style>
+</head>
+
+<body data-page="admin">
+
+  <!-- ═══════════════════════════════
+       LOGIN SCREEN
+  ═══════════════════════════════ -->
+
+  <div id="admin-login">
+
+    <div class="admin-login-card">
+
+      <div class="login-icon">🔐</div>
+
+      <div class="login-title">
+        BCANotes Admin
+      </div>
+
+      <div class="login-sub">
+        Enter password to access dashboard
+      </div>
+
+      <div class="login-form">
+
+        <div class="form-group">
+
+          <label>Password</label>
+
+          <input 
+            class="form-input"
+            type="password"
+            id="admin-pass"
+            placeholder="Enter password"
+          />
+
+        </div>
+
+        <div 
+          class="login-error"
+          id="login-error"
+          style="display:none">
+        </div>
+
+        <button 
+          class="btn btn-primary"
+          id="login-btn"
+          style="
+            width:100%;
+            justify-content:center;
+            margin-top:4px
+          ">
+
+          Sign In →
+
+        </button>
+
+      </div>
+
+      <p style="
+        font-size:11px;
+        color:var(--gray-400);
+        margin-top:14px;
+        text-align:center
+      ">
+        Default password:
+        <code>admin@bca2026</code>
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════
+       ADMIN APP
+  ═══════════════════════════════ -->
+
+  <div id="admin-app">
+
+    <div class="sidebar-overlay"></div>
+
+    <div class="admin-layout">
+
+      <!-- SIDEBAR -->
+
+      <aside class="admin-sidebar">
+
+        <div class="sidebar-header">
+
+          <div class="sidebar-logo">
+
+            <div class="sidebar-logo-icon">
+              💻
+            </div>
+
+            BCANotes
+
+            <span class="sidebar-badge">
+              Admin
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- NAV -->
+
+        <nav class="sidebar-nav">
+
+          <!-- MAIN -->
+
+          <div class="sidebar-section">
+
+            <div class="sidebar-section-label">
+              Main
+            </div>
+
+            <div class="sidebar-item active" data-tab="dashboard">
+              <span class="sidebar-item-icon">📊</span>
+              <span>Dashboard</span>
+            </div>
+
+            <div class="sidebar-item" data-tab="leads">
+              <span class="sidebar-item-icon">👥</span>
+              <span>Leads</span>
+            </div>
+
+          </div>
+
+          <!-- CONTENT -->
+
+          <div class="sidebar-section">
+
+            <div class="sidebar-section-label">
+              Content
+            </div>
+
+            <div class="sidebar-item" data-tab="editor">
+              <span class="sidebar-item-icon">✏️</span>
+              <span>Notes Editor</span>
+            </div>
+
+            <div class="sidebar-item" data-tab="links">
+              <span class="sidebar-item-icon">🔗</span>
+              <span>Link Generator</span>
+            </div>
+
+          </div>
+
+          <!-- ACCOUNT -->
+
+          <div class="sidebar-section">
+
+            <div class="sidebar-section-label">
+              Account
+            </div>
+
+            <div class="sidebar-item" id="logout-btn">
+              <span class="sidebar-item-icon">🚪</span>
+              <span>Logout</span>
+            </div>
+
+            <a 
+              href="index.html"
+              class="sidebar-item"
+              style="display:flex;text-decoration:none"
+            >
+              <span class="sidebar-item-icon">🏠</span>
+              <span>View Site</span>
+            </a>
+
+          </div>
+
+        </nav>
+
+      </aside>
+
+      <!-- MAIN AREA -->
+
+      <div class="admin-main">
+
+        <!-- TOPBAR -->
+
+        <div class="admin-topbar">
+
+          <div style="display:flex;align-items:center;gap:10px">
+
+            <button
+              id="sidebar-toggle"
+              class="btn btn-ghost btn-sm"
+              style="display:none;padding:6px 10px">
+
+              ☰
+
+            </button>
+
+            <div class="topbar-title">
+              BCANotes Dashboard
+            </div>
+
+          </div>
+
+          <div class="topbar-actions">
+
+            <button 
+              class="btn btn-ghost btn-sm"
+              id="refresh-leads">
+
+              ↺ Refresh
+
+            </button>
+
+            <button 
+              class="btn btn-primary btn-sm"
+              id="export-csv">
+
+              ⬇ Export CSV
+
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- ═════════ DASHBOARD ═════════ -->
+
+        <div class="admin-content active" id="panel-dashboard">
+
+          <!-- STATS -->
+
+          <div class="stat-grid">
+
+            <div class="stat-card">
+              <div class="stat-label">Total Leads</div>
+              <div class="stat-value" id="stat-total">—</div>
+              <div class="stat-sub">All time</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Today</div>
+              <div class="stat-value" id="stat-today">—</div>
+              <div class="stat-sub">New today</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Semesters</div>
+              <div class="stat-value" id="stat-sems">6</div>
+              <div class="stat-sub">BCA Semesters</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Subjects</div>
+              <div class="stat-value" id="stat-subjects">50+</div>
+              <div class="stat-sub">Computer Subjects</div>
+            </div>
+
+          </div>
+
+          <!-- QUICK ACTIONS -->
+
+          <div class="admin-panel">
+
+            <div class="panel-header">
+              <div class="panel-title">
+                Quick Actions
+              </div>
+            </div>
+
+            <div class="panel-body"
+                 style="
+                   display:flex;
+                   gap:10px;
+                   flex-wrap:wrap
+                 ">
+
+              <a 
+                href="index.html"
+                target="_blank"
+                class="btn btn-ghost btn-sm">
+
+                🏠 View Home
+
+              </a>
+
+              <a 
+                href="notes.html?sem=1&subject=Programming%20With%20C&note=unit1"
+                target="_blank"
+                class="btn btn-ghost btn-sm">
+
+                📖 Preview Notes
+
+              </a>
+
+              <button 
+                class="btn btn-ghost btn-sm"
+                id="export-csv2">
+
+                ⬇ Export Leads CSV
+
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- SUPABASE GUIDE -->
+
+          <div class="admin-panel">
+
+            <div class="panel-header">
+              <div class="panel-title">
+                ⚡ Supabase Setup
+              </div>
+            </div>
+
+            <div class="panel-body">
+
+              <p style="
+                font-size:13.5px;
+                color:var(--gray-700);
+                line-height:1.8;
+                margin-bottom:12px
+              ">
+
+                <strong>Step 1:</strong>
+                Create free project at
+
+                <a 
+                  href="https://supabase.com"
+                  target="_blank"
+                  style="color:var(--primary)">
+
+                  supabase.com
+
+                </a>
+
+                <br>
+
+                <strong>Step 2:</strong>
+                Run this SQL in SQL Editor:
+
+              </p>
+
+<pre style="
+background:#1e2333;
+color:#e2e8f0;
+padding:14px;
+border-radius:10px;
+font-size:12.5px;
+overflow-x:auto;
+margin-bottom:12px
+"><code>create table leads (
+  id uuid default gen_random_uuid() primary key,
+  name text,
+  mobile text,
+  semester integer,
+  subject text,
+  note_title text,
+  created_at timestamptz default now()
+);
+
+alter table leads enable row level security;
+
+create policy "insert"
+on leads
+for insert
+to anon
+with check (true);
+
+create policy "select"
+on leads
+for select
+to authenticated
+using (true);
+
+create policy "delete"
+on leads
+for delete
+to authenticated
+using (true);</code></pre>
+
+              <p style="
+                font-size:13px;
+                color:var(--gray-700)
+              ">
+
+                <strong>Step 3:</strong>
+                Settings → API → copy Project URL + anon key
+
+                <br>
+
+                <strong>Step 4:</strong>
+                Paste inside
+
+                <code style="
+                  background:#f0f2f7;
+                  padding:2px 6px;
+                  border-radius:4px
+                ">
+                  js/admin.js
+                </code>
+
+                and
+
+                <code style="
+                  background:#f0f2f7;
+                  padding:2px 6px;
+                  border-radius:4px
+                ">
+                  js/notes.js
+                </code>
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- LEADS PANEL -->
+
+        <div class="admin-content" id="panel-leads">
+
+          <div class="admin-panel">
+
+            <div class="panel-header">
+
+              <div class="panel-title">
+                👥 All Leads
+              </div>
+
+              <button 
+                class="btn btn-primary btn-sm"
+                id="export-csv3">
+
+                ⬇ Export CSV
+
+              </button>
+
+            </div>
+
+            <div class="panel-body">
+
+              <div class="leads-controls">
+
+                <input 
+                  type="text"
+                  class="search-input"
+                  id="lead-search"
+                  placeholder="Search name, mobile, subject…"
+                />
+
+                <button 
+                  class="btn btn-ghost btn-sm"
+                  id="refresh-leads2">
+
+                  ↺ Refresh
+
+                </button>
+
+              </div>
+
+              <div class="table-wrap">
+
+                <table class="leads-table">
+
+                  <thead>
+
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Mobile</th>
+                      <th>Sem</th>
+                      <th>Subject</th>
+                      <th>Note</th>
+                      <th>Date</th>
+                      <th></th>
+                    </tr>
+
+                  </thead>
+
+                  <tbody id="leads-tbody">
+
+                    <tr>
+                      <td colspan="8" class="table-loading">
+                        Loading…
+                      </td>
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="toast"></div>
+
+  <!-- SCRIPTS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/admin.js"></script>
+
+</body>
+</html>
