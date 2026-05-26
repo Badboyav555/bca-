@@ -740,7 +740,7 @@ ${basePath()}notes/sem${S.sem}/${subjectFolder}/${S.note}-${lang}.md
 
     }
 
-   /* const md = await res.text();
+    const md = await res.text();
 
     if (!md || !md.trim()) {
 
@@ -748,8 +748,8 @@ ${basePath()}notes/sem${S.sem}/${subjectFolder}/${S.note}-${lang}.md
         'File is empty'
       );
 
-    } */
-     const md = await res.text();
+    } 
+    /* const md = await res.text();
 
 // EMPTY FILE
 if (!md || !md.trim()) {
@@ -774,7 +774,7 @@ if (
     'Markdown file not found'
   );
 
-}
+} */
 
     S.md = md;
 
